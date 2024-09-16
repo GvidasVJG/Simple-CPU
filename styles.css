@@ -1,8 +1,8 @@
-/* Version 1 */
+/* General Styles */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 20px;
-    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
 }
 
 h1 {
@@ -11,132 +11,89 @@ h1 {
 
 .controls {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-.controls button {
-    padding: 10px 20px;
-    margin: 0 10px;
-    font-size: 16px;
-    cursor: pointer;
+.controls button, .controls input[type="range"] {
+    margin: 5px;
 }
 
 .main-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
-/* Left Column */
 .left-column {
-    display: flex;
-    flex-direction: column;
-}
-
-.code-editor {
-    position: relative;
-    width: 100%;
-}
-
-/* Hide code editor by default */
-#codeEditorContainer {
-    display: none;
-}
-
-#lineNumbers {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 30px;
-    text-align: right;
-    padding-top: 8px;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 14px;
-    color: #888;
-    user-select: none;
-}
-
-#assemblyInput {
-    width: 100%;
-    height: 400px;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 14px;
-    padding: 8px 8px 8px 40px;
-    box-sizing: border-box;
-}
-
-/* Status Bar */
-.status-bar {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    margin-top: 20px;
+    flex: 1;
+    min-width: 300px;
+    margin-right: 20px;
 }
 
 .panel {
-    background-color: #fff;
+    border: 1px solid #ccc;
     padding: 10px;
-    margin-right: 10px;
     margin-bottom: 10px;
-    overflow: auto;
 }
 
-.panel.compact {
-    flex: 1 1 30%;
-    max-width: 30%;
+.compact {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 10px;
 }
 
-.panel h2 {
-    margin-top: 0;
-}
-
-#registersTable, #memoryTable {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-#registersTable th, #registersTable td, #memoryTable th, #memoryTable td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
-
-#registersTable tr:nth-child(even), #memoryTable tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-#registersTable th, #memoryTable th {
-    background-color: #4CAF50;
-    color: white;
-}
-
-#memoryContainer {
-    max-height: 800px;
-    overflow-y: scroll;
+.status-bar {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .memory-panel {
-    max-width: 100%;
+    flex: 2;
+    min-width: 300px;
+}
+
+.code-editor {
+    display: flex;
+}
+
+.line-numbers {
+    background-color: #f0f0f0;
+    padding: 5px;
+    text-align: right;
+    user-select: none;
+}
+
+.line-numbers br {
+    line-height: 1.2em;
+}
+
+textarea {
+    width: 100%;
+    height: 200px;
+    font-family: monospace;
+    resize: vertical;
 }
 
 #outputField {
-    background-color: #eee;
-    padding: 10px;
-    min-height: 100px;
-    overflow: auto;
+    background-color: #f0f0f0;
+    padding: 5px;
+    min-height: 50px;
+    white-space: pre-wrap;
 }
 
-.highlight {
-    background-color: yellow !important;
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.current-line {
-    background-color: #dcdcdc !important;
-}
-
-#instructionPointer {
-    font-size: 24px;
+th, td {
+    border: 1px solid #ccc;
+    padding: 5px;
     text-align: center;
+}
+
+#memoryTable td, #memoryTable th {
+    width: 2.5em;
+    height: 2em;
 }
 
 /* Highlight colors */
@@ -161,7 +118,6 @@ h1 {
 .legend.opcode-highlight {
     background-color: lightblue;
 }
-
 
 /* Modal styles */
 .modal {
@@ -203,15 +159,47 @@ h1 {
     cursor: pointer;
 }
 
-/* Ensure modal content is scrollable */
 .modal-body {
     max-height: calc(100vh - 200px); /* Adjust as needed */
     overflow-y: auto;
 }
 
-/* Center the modal */
-.modal-content {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+table {
+    margin: 10px 0;
+}
+
+table th, table td {
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+pre {
+    background-color: #f0f0f0;
+    padding: 10px;
+}
+
+/* Adjust code editor styles */
+.code-editor textarea {
+    flex: 1;
+    height: 200px;
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.2em;
+    padding: 5px;
+}
+
+.code-editor .line-numbers {
+    padding-right: 10px;
+    border-right: 1px solid #ccc;
+}
+
+.code-editor .line-numbers {
+    min-width: 30px;
+}
+
+/* Speed Slider */
+.controls input[type="range"] {
+    vertical-align: middle;
+    margin-left: 10px;
+    margin-right: 10px;
 }
