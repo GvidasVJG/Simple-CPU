@@ -1,0 +1,217 @@
+/* Version 1 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+    background-color: #f5f5f5;
+}
+
+h1 {
+    text-align: center;
+}
+
+.controls {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.controls button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* Left Column */
+.left-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.code-editor {
+    position: relative;
+    width: 100%;
+}
+
+/* Hide code editor by default */
+#codeEditorContainer {
+    display: none;
+}
+
+#lineNumbers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    text-align: right;
+    padding-top: 8px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    color: #888;
+    user-select: none;
+}
+
+#assemblyInput {
+    width: 100%;
+    height: 400px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    padding: 8px 8px 8px 40px;
+    box-sizing: border-box;
+}
+
+/* Status Bar */
+.status-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-top: 20px;
+}
+
+.panel {
+    background-color: #fff;
+    padding: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    overflow: auto;
+}
+
+.panel.compact {
+    flex: 1 1 30%;
+    max-width: 30%;
+}
+
+.panel h2 {
+    margin-top: 0;
+}
+
+#registersTable, #memoryTable {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#registersTable th, #registersTable td, #memoryTable th, #memoryTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+#registersTable tr:nth-child(even), #memoryTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#registersTable th, #memoryTable th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#memoryContainer {
+    max-height: 800px;
+    overflow-y: scroll;
+}
+
+.memory-panel {
+    max-width: 100%;
+}
+
+#outputField {
+    background-color: #eee;
+    padding: 10px;
+    min-height: 100px;
+    overflow: auto;
+}
+
+.highlight {
+    background-color: yellow !important;
+}
+
+.current-line {
+    background-color: #dcdcdc !important;
+}
+
+#instructionPointer {
+    font-size: 24px;
+    text-align: center;
+}
+
+/* Highlight colors */
+.highlight-change {
+    background-color: yellow;
+}
+
+.highlight-opcode {
+    background-color: lightblue;
+}
+
+/* Legend styling */
+.legend {
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.legend.change-highlight {
+    background-color: yellow;
+}
+
+.legend.opcode-highlight {
+    background-color: lightblue;
+}
+
+
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-height: 80%; /* Adjust as needed */
+    overflow-y: auto; /* Enable vertical scroll */
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Ensure modal content is scrollable */
+.modal-body {
+    max-height: calc(100vh - 200px); /* Adjust as needed */
+    overflow-y: auto;
+}
+
+/* Center the modal */
+.modal-content {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}

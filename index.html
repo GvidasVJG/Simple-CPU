@@ -1,0 +1,225 @@
+<!-- Version 1 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple CPU Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Simple CPU Simulator</h1>
+
+    <!-- Control Buttons -->
+    <div class="controls">
+        <button id="runButton">Run</button>
+        <button id="stepButton">Step</button>
+        <button id="resetButton">Reset</button>
+        <button id="toggleEditorButton">Toggle Code Editor</button>
+        <button id="helpButton">Help</button>
+    </div>
+
+    <!-- Main Grid Container -->
+    <div class="main-grid">
+        <!-- Left Column: Code Editor (optional), Memory Input, Registers, PC, IR, Output -->
+        <div class="left-column">
+            <!-- Code Editor with Line Numbers -->
+            <div id="codeEditorContainer" style="display: none;">
+                <div class="code-editor">
+                    <div class="line-numbers" id="lineNumbers"></div>
+                    <textarea id="assemblyInput" placeholder="Enter assembly code here..."></textarea>
+                </div>
+                <button id="assembleButton">Assemble Code</button>
+            </div>
+
+            <!-- Memory Input Panel -->
+            <div class="panel">
+                <h2>Memory Input</h2>
+                <textarea id="memoryInput" placeholder="Enter memory data here... Example: [00]: 0F"></textarea>
+                <button id="loadMemoryButton">Load Memory</button>
+            </div>
+
+            <!-- Registers, PC, IR, and Output Field -->
+            <div class="status-bar">
+                <div class="panel compact">
+                    <h2>Registers</h2>
+                    <table id="registersTable">
+                        <tr><th>Register</th><th>Value</th></tr>
+                        <tr><td>PC</td><td id="PC">00</td></tr>
+                        <tr><td>IR</td><td id="IR"></td></tr>
+                        <tr><td>R0</td><td id="R0">00</td></tr>
+                        <tr><td>R1</td><td id="R1">00</td></tr>
+                        <tr><td>R2</td><td id="R2">00</td></tr>
+                    </table>
+                </div>
+
+                <div class="panel compact">
+                    <h2>Output</h2>
+                    <div id="outputField"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Memory Display -->
+        <div class="panel memory-panel">
+            <h2>Memory</h2>
+            <div id="memoryContainer"></div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeHelp">&times;</span>
+            <h2>Help</h2>
+            <div class="modal-body">
+                <p>Welcome to the Simple CPU Simulator! This tool allows you to simulate a basic CPU, including memory, registers, and the fetch-decode-execute cycle.</p>
+
+                <h3>Getting Started</h3>
+                <p>You can input instructions into memory directly or use the optional assembly code editor to write and assemble assembly-like code.</p>
+
+                <h3>Memory Input</h3>
+                <p>To load values into memory directly, use the following format in the Memory Input area:</p>
+                <pre>[address]: value</pre>
+                <p>Both <code>address</code> and <code>value</code> should be two-digit hexadecimal numbers.</p>
+                <p>Example:</p>
+                <pre>
+[00]: 10
+[01]: 00
+[02]: 05
+                </pre>
+
+                <h3>Assembly Code Editor</h3>
+                <p>Click the "Toggle Code Editor" button to show or hide the assembly code editor. Write your assembly code in the editor and click "Assemble Code" to assemble it and load it into memory.</p>
+
+                <h4>Supported Instructions</h4>
+                <table>
+                    <tr>
+                        <th>Instruction</th>
+                        <th>Format</th>
+                        <th>Opcode</th>
+                    </tr>
+                    <tr>
+                        <td>MOV</td>
+                        <td>REG, IMM</td>
+                        <td>0x10</td>
+                    </tr>
+                    <tr>
+                        <td>MOV</td>
+                        <td>REG, REG</td>
+                        <td>0x11</td>
+                    </tr>
+                    <tr>
+                        <td>MOV</td>
+                        <td>REG, [ADDR]</td>
+                        <td>0x12</td>
+                    </tr>
+                    <tr>
+                        <td>MOV</td>
+                        <td>[ADDR], REG</td>
+                        <td>0x13</td>
+                    </tr>
+                    <tr>
+                        <td>ADD</td>
+                        <td>REG, IMM</td>
+                        <td>0x20</td>
+                    </tr>
+                    <tr>
+                        <td>ADD</td>
+                        <td>REG, REG</td>
+                        <td>0x21</td>
+                    </tr>
+                    <tr>
+                        <td>ADD</td>
+                        <td>REG, [ADDR]</td>
+                        <td>0x22</td>
+                    </tr>
+                    <tr>
+                        <td>SUB</td>
+                        <td>REG, IMM</td>
+                        <td>0x30</td>
+                    </tr>
+                    <tr>
+                        <td>SUB</td>
+                        <td>REG, REG</td>
+                        <td>0x31</td>
+                    </tr>
+                    <tr>
+                        <td>SUB</td>
+                        <td>REG, [ADDR]</td>
+                        <td>0x32</td>
+                    </tr>
+                    <tr>
+                        <td>INC</td>
+                        <td>REG</td>
+                        <td>0x40</td>
+                    </tr>
+                    <tr>
+                        <td>DEC</td>
+                        <td>REG</td>
+                        <td>0x41</td>
+                    </tr>
+                    <tr>
+                        <td>OUT</td>
+                        <td>REG</td>
+                        <td>0x50</td>
+                    </tr>
+                    <tr>
+                        <td>HLT</td>
+                        <td></td>
+                        <td>0xFF</td>
+                    </tr>
+                </table>
+
+                <h3>Highlight Legend</h3>
+                <p>The simulator uses different highlight colors to indicate various actions:</p>
+                <ul>
+                    <li><span class="legend opcode-highlight">Blue Highlight</span>: Indicates the opcode being fetched and executed from memory.</li>
+                    <li><span class="legend change-highlight">Yellow Highlight</span>: Indicates registers or memory cells that have changed.</li>
+                </ul>
+
+                <h3>Running the Program</h3>
+                <p>After loading your program into memory (either directly or via the assembler), you can run it by clicking "Run" or execute it step by step using the "Step" button.</p>
+
+                <h3>Understanding the Simulator</h3>
+                <p>The simulator includes:</p>
+                <ul>
+                    <li><strong>Memory</strong> - 256 bytes of memory displayed on the right.</li>
+                    <li><strong>Registers</strong> - General-purpose registers <code>R0</code>, <code>R1</code>, <code>R2</code>, the Program Counter (<code>PC</code>), and the Instruction Register (<code>IR</code>).</li>
+                    <li><strong>Output</strong> - Displays output from the <code>OUT</code> instruction.</li>
+                </ul>
+
+                <h3>Sample Program</h3>
+                <p>Here's a sample program to add two numbers and output the result:</p>
+                <pre>
+MOV R0, 05      ; Load 05 into R0
+MOV R1, 0A      ; Load 0A into R1
+ADD R0, R1      ; R0 = R0 + R1
+OUT R0          ; Output the value of R0
+HLT             ; Halt the program
+                </pre>
+
+                <h3>Notes</h3>
+                <ul>
+                    <li>All values are in hexadecimal (00 to FF).</li>
+                    <li>You can use comments in your code by adding a semicolon (<code>;</code>).</li>
+                    <li>The simulator supports step-by-step execution, highlighting changes to registers and memory.</li>
+                    <li>Use the "Reset" button to clear the simulator state.</li>
+                </ul>
+
+                <h3>Troubleshooting</h3>
+                <p>If you encounter errors, check the following:</p>
+                <ul>
+                    <li>Ensure all addresses and values are valid hex numbers between 00 and FF.</li>
+                    <li>Verify instruction formats and operands.</li>
+                    <li>Check for typos in register names and instructions.</li>
+                </ul>
+
+                <p>Enjoy exploring the basics of CPU operation with this simulator!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include JavaScript File -->
+    <script src="script.js"></script>
+</body>
+</html>
