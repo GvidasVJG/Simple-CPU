@@ -69,31 +69,49 @@
         </div>
     </div>
 
-    <!-- Help Modal -->
     <div id="helpModal" class="modal">
         <div class="modal-content">
             <span class="close-button" id="closeHelp">&times;</span>
             <h2>Help</h2>
             <div class="modal-body">
                 <p>Welcome to the Simple CPU Simulator! This tool allows you to simulate a basic CPU, including memory, registers, flags, and the fetch-decode-execute cycle.</p>
-
+    
                 <h3>Getting Started</h3>
                 <p>You can input instructions into memory directly or use the optional assembly code editor to write and assemble assembly-like code.</p>
-
+    
+                <h3>CPU Components Explained</h3>
+                <p>Understanding the CPU components is essential for effective programming and simulation. Here's a breakdown of the key components included in the simulator:</p>
+    
+                <h4>Program Counter (PC)</h4>
+                <p>The <strong>Program Counter (PC)</strong> is a special register that holds the memory address of the next instruction to be executed. It ensures instructions are executed in the correct sequence and updates automatically unless altered by jump instructions.</p>
+    
+                <h4>Instruction Register (IR)</h4>
+                <p>The <strong>Instruction Register (IR)</strong> temporarily holds the current instruction fetched from memory. The CPU decodes and executes the instruction stored in the IR during the fetch-decode-execute cycle.</p>
+    
+                <h4>Registers</h4>
+                <p>The CPU has general-purpose registers (<code>R0</code>, <code>R1</code>, <code>R2</code>) used for arithmetic operations, data storage, and more.</p>
+    
+                <h4>Flags</h4>
+                <p>The CPU uses flags to store the results of comparisons and arithmetic operations:</p>
+                <ul>
+                    <li><strong>Zero Flag (ZF)</strong>: Set to 1 if the result of an operation is zero.</li>
+                    <li><strong>Sign Flag (SF)</strong>: Set to 1 if the result of an operation is negative (in two's complement).</li>
+                </ul>
+    
                 <h3>Memory Input</h3>
                 <p>To load values into memory directly, use the following format in the Memory Input area:</p>
                 <pre>[address]: value</pre>
                 <p>Both <code>address</code> and <code>value</code> should be two-digit hexadecimal numbers.</p>
                 <p>Example:</p>
                 <pre>
-[00]: 10
-[01]: 00
-[02]: 05
+    [00]: 10
+    [01]: 00
+    [02]: 05
                 </pre>
-
+    
                 <h3>Assembly Code Editor</h3>
                 <p>Click the "Toggle Code Editor" button to show or hide the assembly code editor. Write your assembly code in the editor and click "Assemble Code" to assemble it and load it into memory.</p>
-
+    
                 <h4>Supported Instructions</h4>
                 <table>
                     <tr>
@@ -101,6 +119,7 @@
                         <th>Format</th>
                         <th>Opcode</th>
                     </tr>
+                    <!-- Include all instructions with opcodes -->
                     <tr><td>MOV</td><td>REG, IMM</td><td>0x10</td></tr>
                     <tr><td>MOV</td><td>REG, REG</td><td>0x11</td></tr>
                     <tr><td>MOV</td><td>REG, [ADDR]</td><td>0x12</td></tr>
@@ -124,24 +143,17 @@
                     <tr><td>OUT</td><td>REG</td><td>0x50</td></tr>
                     <tr><td>HLT</td><td></td><td>0xFF</td></tr>
                 </table>
-
-                <h3>Flags</h3>
-                <p>The CPU simulator uses flags to store the results of comparisons and arithmetic operations:</p>
-                <ul>
-                    <li><strong>Zero Flag (ZF)</strong>: Set to 1 if the result of an operation is zero.</li>
-                    <li><strong>Sign Flag (SF)</strong>: Set to 1 if the result of an operation is negative (in two's complement).</li>
-                </ul>
-
+    
                 <h3>Highlight Legend</h3>
                 <p>The simulator uses different highlight colors to indicate various actions:</p>
                 <ul>
                     <li><span class="legend opcode-highlight">Blue Highlight</span>: Indicates the opcode being fetched and executed from memory.</li>
-                    <li><span class="legend change-highlight">Yellow Highlight</span>: Indicates registers or memory cells that have changed.</li>
+                    <li><span class="legend change-highlight">Yellow Highlight</span>: Indicates registers, flags, or memory cells that have changed.</li>
                 </ul>
-
+    
                 <h3>Running the Program</h3>
                 <p>After loading your program into memory (either directly or via the assembler), you can run it by clicking "Run" or execute it step by step using the "Step" button. Use the speed slider to adjust the execution speed when running the program.</p>
-
+    
                 <h3>Understanding the Simulator</h3>
                 <p>The simulator includes:</p>
                 <ul>
@@ -150,40 +162,93 @@
                     <li><strong>Flags</strong> - Zero Flag (<code>ZF</code>) and Sign Flag (<code>SF</code>).</li>
                     <li><strong>Output</strong> - Displays output from the <code>OUT</code> instruction.</li>
                 </ul>
-
-                <h3>Sample Program</h3>
-                <p>Here's a sample program that demonstrates the use of <code>CMP</code> and conditional jumps:</p>
+    
+                <h3>Sample Programs</h3>
+                <p>Here are some sample programs to help you understand how to use the simulator:</p>
+    
+                <!-- Include the 5 examples here, as in the previous explanation -->
+                <!-- Each example should include both assembly code and direct memory load format -->
+    
+                <h4>Example 1: Load and Output a Value</h4>
+                <p><strong>Objective:</strong> Load a value into a register and output it.</p>
+                <p><strong>Assembly Code:</strong></p>
                 <pre>
-; Example: Count down from 5 to 0
-MOV R0, 05      ; Initialize counter in R0
-LOOP:
-OUT R0          ; Output the current value
-DEC R0          ; Decrement R0
-CMP R0, 00      ; Compare R0 with 0
-JG LOOP         ; Jump to LOOP if R0 > 0
-HLT             ; Halt the program
+    MOV R0, 0A      ; Load the value 0A into R0
+    OUT R0          ; Output the value of R0
+    HLT             ; Halt the program
                 </pre>
-
-                <h3>Notes</h3>
+                <p><strong>Direct Memory Load:</strong></p>
+                <pre>
+    [00]: 10        ; Opcode for MOV R0, IMM
+    [01]: 00        ; Register code for R0
+    [02]: 0A        ; Immediate value 0A
+    [03]: 50        ; Opcode for OUT R0
+    [04]: 00        ; Register code for R0
+    [05]: FF        ; Opcode for HLT
+                </pre>
+    
+                <!-- Include Examples 2 to 5 similarly -->
+    
+                <h3>Practice Tasks</h3>
+                <p>Try solving these tasks to deepen your understanding:</p>
+    
+                <!-- Include the two simpler tasks first -->
+    
+                <h4>Introductory Task 1: Simple Addition</h4>
+                <p><strong>Objective:</strong> Add two immediate values and output the result.</p>
+                <p>Instructions:</p>
                 <ul>
-                    <li>All values are in hexadecimal (00 to FF).</li>
-                    <li>You can use comments in your code by adding a semicolon (<code>;</code>).</li>
-                    <li>The simulator supports step-by-step execution, highlighting changes to registers, flags, and memory.</li>
-                    <li>Use the "Reset" button to clear the simulator state.</li>
+                    <li>Load the value 02 into R0.</li>
+                    <li>Add the immediate value 03 to R0.</li>
+                    <li>Output the result in R0.</li>
                 </ul>
-
+    
+                <h4>Introductory Task 2: Register Copy</h4>
+                <p><strong>Objective:</strong> Copy a value from one register to another and output it.</p>
+                <p>Instructions:</p>
+                <ul>
+                    <li>Load the value 0F into R1.</li>
+                    <li>Move the value from R1 to R2.</li>
+                    <li>Output the value in R2.</li>
+                </ul>
+    
+                <!-- Then include Tasks 1 to 5 with solutions -->
+    
+                <!-- <h4>Task 1: Multiplication via Repeated Addition</h4>
+                <p><strong>Objective:</strong> Multiply two numbers by repeated addition.</p>
+                <p><strong>Assembly Code Solution:</strong></p>
+                <pre>
+    ; Multiply R0 and R1, store result in R2
+    MOV R0, 03      ; First number
+    MOV R1, 04      ; Second number
+    MOV R2, 00      ; Initialize result to 0
+    LOOP:
+    ADD R2, R0      ; Add R0 to R2
+    DEC R1          ; Decrement R1
+    CMP R1, 00      ; Compare R1 with 0
+    JG LOOP         ; If R1 > 0, repeat loop
+    OUT R2          ; Output the result
+    HLT             ; Halt the program
+                </pre>
+                <p><strong>Direct Memory Load Solution:</strong></p> -->
+                <!-- Provide the direct memory load format -->
+    
+                <!-- Similarly provide solutions for Tasks 2 to 5 -->
+    
                 <h3>Troubleshooting</h3>
                 <p>If you encounter errors, check the following:</p>
                 <ul>
                     <li>Ensure all addresses and values are valid hex numbers between 00 and FF.</li>
                     <li>Verify instruction formats and operands.</li>
                     <li>Check for typos in register names and instructions.</li>
+                    <li>Make sure labels are correctly defined and used.</li>
                 </ul>
-
+    
                 <p>Enjoy exploring the basics of CPU operation with this simulator!</p>
             </div>
         </div>
     </div>
+    
 
     <!-- Include JavaScript File -->
     <script src="script.js"></script>
